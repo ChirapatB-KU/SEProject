@@ -15,9 +15,9 @@
 #button_next{
     background-color: #61b292;
     text-align: center;
-    margin: auto;
-    margin-left: 10%;
+    margin-left: 35%;
 }
+
 
 .box_img{
     text-align: center;
@@ -135,6 +135,14 @@ label{
     font-size: 15px;
 }
 
+.form-control {
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+    justify-content: space-around;
+    padding-left: 0px;
+}
+
 .col-lg-6{
     border: none;
     border: 1px solid #C4C4C4;
@@ -164,4 +172,7 @@ label{
 .yes{
     width: 80%;
     height: 80%;
+}
+.box_white{
+    padding: 10%;
 }

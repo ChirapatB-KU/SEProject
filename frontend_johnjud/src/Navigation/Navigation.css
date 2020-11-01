@@ -54,6 +54,9 @@
 .dropmenu{
     height: 160%;
 }
+.dropmenu2{
+    height: 120%;
+}
 
 .left{
     margin-right: 10px;
@@ -89,7 +92,7 @@
 
 .notiPop {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 /*.textLink {
