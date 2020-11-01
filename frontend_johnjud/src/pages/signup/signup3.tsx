@@ -6,6 +6,9 @@ import { Container } from 'reactstrap';
 import Navigation2 from '../../Navigation/Navigation2';
 
 const Signup3 = () =>{ 
+  localStorage.removeItem("SignupInfo");
+  localStorage.removeItem("keyinfo");
+  localStorage.removeItem("id");
   return(
     <div>
       <Navigation2/>
@@ -13,10 +16,10 @@ const Signup3 = () =>{
             <div className='left'>
                 <img src={yes} alt='yes' className='yes'/>
             </div>
-            <div className='right'>
-                <div className='text_right text2'>
-                  <p>OTP was successfully verified. </p>
-                  <NavLink to='/signin2'><p> return to Login ...</p></NavLink>
+            <div className='rightOTP'>
+                <div className='text_rightOTP text2'>
+                  <p style={{fontSize:20}}>OTP was successfully verified. </p>
+                  <NavLink to='/signin2'><p style={{fontSize:16, color:'#61B292'}}> return to Login ...</p></NavLink>
                 </div>
             </div>
         </Container>

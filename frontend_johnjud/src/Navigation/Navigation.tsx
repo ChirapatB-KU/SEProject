@@ -12,7 +12,7 @@ import JJicon from './img/newlogo02.png';
 import {Petinfo} from './Interface';
 import NavigationService from './NavigationService'
 import AuthenService from "../pages/signin/AuthenService";
-
+import { If } from 'react-if';
 
 const Navigation = () => {   
    const haddlelogout = () => {
@@ -36,7 +36,8 @@ const Navigation = () => {
     const userid = obj?.UserId;
     const adopuserid = obj?.AdopUserId;
     const checkcode = obj?.CheckCode;
-    
+    const userIdlocal = localStorage.UserId;
+
    return (
        <div>
          <Navbar className='Navbar'>
@@ -69,17 +70,18 @@ const Navigation = () => {
             <PopoverHeader>Notification</PopoverHeader>
                <PopoverBody className="notiPop">                  
                   {allPet.map((value) => {
+                     return(
                      
-                     return (
-                        <div>
-                        {value.CheckCode ? 
+                        <If condition={value.CheckCode}>
                            <h5 id="noti1">คุณได้ทำการนัดแลกเปลี่ยน {value.PetName} เรียบร้อยแล้ว
-                           <NavLink to="/receiver/petprofile/"><h5 id="noti2">ดูข้อมูล</h5></NavLink>
-                           </h5> 
-                           : null
-                        }
-                        </div>
-               )
+                           <NavLink to={'/receiver/petprofile/' + value.petid}>
+                              <h5 id="noti2">ดูข้อมูล</h5>
+                           </NavLink>
+                           </h5>
+                        </If>
+                     
+                     )
+               
                })}
                </PopoverBody>
             
@@ -91,7 +93,7 @@ const Navigation = () => {
                      <img src={manIcon} alt='man' />
                   </DropdownToggle>
                   <DropdownMenu right className='dropmenu'>
-                     <NavLink to='/receiver/userprofile'>
+                     <NavLink to={`/receiver/userprofile/${userIdlocal}`}>
                         <DropdownItem>
                            profile
                         </DropdownItem>

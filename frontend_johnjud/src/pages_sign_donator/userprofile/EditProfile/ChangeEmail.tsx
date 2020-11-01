@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../Profile.css';
 import ProfileService from '../ProfileService';
 import profileservice from '../ProfileService';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import ProfilePic from '../ProfilePic.png';
 import Glasspic from '../Glasspic.jpg';
 import {Userinfo} from '../Interface';
@@ -29,13 +29,14 @@ const ChangeEmail=(props:any) => {
     const email = obj?.Email;
     const [Password, setPassword] = useState<string>('')
     const [newEmail, setNewEmail] = useState<string>('');
-
+    const history = useHistory();
     const update=() =>{
         ProfileService.updateemail(newEmail,localStorage.Token)
         .then(a=>{
+            console.log(a)
             if(a){
                 alert("Change Email Success!")
-                // history.push(`/donator/userprofile/${userId}/editprofile/changephone/OTP`)
+                history.push(`/donator/userprofile/${userId}/editprofile`)
             }
             else{
                 alert("Error")

@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../Profile.css';
-import ProfilePic from '../ProfilePic.png';
 import TabProfile from '../TabProfile';
 import Glasspic from '../Glasspic.jpg';
 import { Link } from 'react-router-dom';
@@ -11,14 +10,27 @@ import EditEmail from './EditEmail';
 import EditPhone from './EditPhone';
 import Navigation3 from '../../../Navigation/Navigation3'
 import Editimage from './EditImageProfile'
-
+import profileservice from '../ProfileService';
+import { Userinfo } from '../Interface';
 
 const EditProfile=(props:any) =>{
-    /*const [selectFile, setSelectedFiles] = useState(undefined);
-    const uploadProfile=()=>{
 
-    }*/
     const userId = props.match.params.userId
+    const [Obj,setObj] = useState<Userinfo>();
+
+    const fetchProfileInfo=() =>{
+        return(
+          profileservice.fetchProfileInfo(userId)
+          .then(res => {
+            setObj(res)
+          })
+        )
+      }
+      const ProfilePic = Obj?.ImgURL;
+      console.log(ProfilePic)
+      useEffect(()=>{
+        fetchProfileInfo()
+      },[])
 
     return(
         <div>
@@ -26,8 +38,11 @@ const EditProfile=(props:any) =>{
             <div>
             <Navigation3/>
             <div className = 'Profile'>
-            <img id='profilePic' src={ProfilePic} alt={''}/>
-            <Editimage/>
+            <img id='profilePic' src={ProfilePic}></img>
+            <div className = "editimageProfile">
+             <Editimage/>
+            </div>
+            
             
             <img id='glasspic' src = {Glasspic} alt={''}/>
             <div className='block'>

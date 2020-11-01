@@ -1,40 +1,48 @@
-import React, { useState } from "react";
+import React, { Component} from 'react';
+import axios from 'axios'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button';
+import profileservice from '../ProfileService';
 
-const EditImageProfile =() =>{
-  const [image, setImage] = useState<any>();
+class Upload extends Component {
 
-  const handleUpload=() =>{
-    const file = image
-    console.log(image)
-    const profile_pic = new FormData()
-    profile_pic.append('image',file,'sss.jpg')
+    state = {
+        file: ""
+    }
 
-    // const data = {"key": "6a6fdcf54607966c3d037f0db246f7c1", 
-    // "image": profile_pic, 
-    // "name": "test", 
-    // "expiration": "15552000"};
-    
-    console.log(profile_pic)
-    fetch('https://api.imgbb.com/1/upload?key=6a6fdcf54607966c3d037f0db246f7c1',{
-      method:'POST',
-      body:profile_pic,
-      redirect: 'follow'
-    })
-  }
+    handleFile(e:any){
 
+        let file = e.target.files[0]
+        this.setState({file: file})
+    }
 
-  return (
-    <div>
-      <input
-        type="file"
-        id="upload-button"
-        onChange={(e) => {setImage(e.target.value);}}
-      />
-      
-      <br />
-      <button onClick={handleUpload}>Upload</button>
-    </div>
-  );
+    handleUpload(e:any){
+
+        const file = this.state.file
+        const profile_pic = new FormData()
+        profile_pic.append('image',file)
+        profileservice.updateProfileimage(profile_pic)
+        .then(ress=>{
+          profileservice.updateurlimage(ress.data.display_url,ress.data.delete_url,localStorage.UserId,localStorage.Token)
+        })
+    }
+
+    render() {
+        return (
+            <div className="Up">
+                <h1>Upload Pic</h1>
+                <form>
+                    <div className="">
+                        <label>Select File </label>
+                        <input type="file" multiple name="profile_pic" 
+                        onChange={(e)=>this.handleFile(e)} />
+                    </div>
+                    <br />
+                    <Button onClick={(e)=>this.handleUpload(e)}>Upload</Button>
+                </form>
+            </div>
+        );
+    }
 }
 
-export default EditImageProfile;
+export default Upload;

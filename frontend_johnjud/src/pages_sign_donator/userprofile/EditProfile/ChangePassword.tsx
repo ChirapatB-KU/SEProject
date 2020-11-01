@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../Profile.css';
 //import ProfileService from '../ProfileService';
 import profileservice from '../ProfileService';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import ProfilePic from '../ProfilePic.png';
 import Glasspic from '../Glasspic.jpg';
 import Navigation3 from '../../../Navigation/Navigation3'
@@ -11,12 +11,21 @@ import Navigation3 from '../../../Navigation/Navigation3'
 const ChangePassword=(props:any) => {
     const [Password, setPassword] = useState<string>('')
     const [ConfirmPassword, setConfirmPassword] = useState<string>('')
-
+    const history = useHistory()
     const userId = props.match.params.userId;
     const submit=() =>{
-        return(
-            profileservice.updatePassword(Password,ConfirmPassword,localStorage.Token)
-        )
+        profileservice.updatePassword(Password,ConfirmPassword,localStorage.Token)
+        .then( res=>{
+            console.log(res)
+            if(res){
+                alert("chagne password success!")
+                history.push(`/donator/userprofile/${userId}/editprofile`)
+            }
+            else{
+                alert("error please try again")
+            }
+        })
+        
     }
     return(
         <div>

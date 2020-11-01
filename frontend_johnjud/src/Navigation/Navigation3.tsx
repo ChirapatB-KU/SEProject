@@ -13,6 +13,7 @@ import {Petinfo} from './Interface';
 import NavigationService from './NavigationService'
 
 import AuthenService from "../pages/signin/AuthenService";
+import { If } from 'react-if';
 
 const Navigation = () => {
    const haddlelogout = () => {
@@ -35,7 +36,7 @@ const Navigation = () => {
     const petname = obj?.PetName;
     const userid = obj?.UserId;
     const adopuserid = obj?.AdopUserId;
-
+    const userIdlocal = localStorage.UserId
    return (
        <div>
          <Navbar className='Navbar_brown'>
@@ -70,14 +71,13 @@ const Navigation = () => {
                   {allPet.map((value) => {
                      
                      return (
-                        <div>
-                        {value.CheckCode ? 
+                        <If condition={value.CheckCode}>
                            <h5 id="noti1">คุณได้ทำการนัดแลกเปลี่ยน {value.PetName} เรียบร้อยแล้ว
-                           <NavLink to="/receiver/petprofile/"><h5 id="noti2">ดูข้อมูล</h5></NavLink>
-                           </h5> 
-                           : null
-                        }
-                        </div>
+                           <NavLink to={'/receiver/petprofile/' + value.petid}>
+                              <h5 id="noti2">ดูข้อมูล</h5>
+                           </NavLink>
+                           </h5>
+                        </If>
                )
                })}
                </PopoverBody>
@@ -89,7 +89,7 @@ const Navigation = () => {
                      <img src={manIcon} alt='man' />
                   </DropdownToggle>
                   <DropdownMenu right className='dropmenu2'>
-                     <NavLink to='/donator/userprofile'>
+                     <NavLink to={`/donator/userprofile/${userIdlocal}`}>
                         <DropdownItem>
                            profile
                         </DropdownItem>
